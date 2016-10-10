@@ -35,19 +35,18 @@ public class SimpleSMSReceiver {
 
 	private void bindToSmsc() {
 		try {
-			BindRequest request = new BindReceiver();
-
+			// setup connection
 			TCPIPConnection connection = new TCPIPConnection(ipAddress, port);
 			connection.setReceiveTimeout(20 * 1000);
 			session = new Session(connection);
 
-			// set values
+			// set request parameters
+			BindRequest request = new BindReceiver();
 			request.setSystemId(systemId);
 			request.setPassword(password);
 
-			// send the request
+			// send request to bind
 			BindResponse response = session.bind(request);
-			
 			if (response.getCommandStatus() == Data.ESME_ROK) {
 				System.out.println("Sms receiver is connected to SMPPSim.");
 			}
